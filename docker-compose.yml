@@ -1,0 +1,44 @@
+version: "3.9"
+services:
+  db:
+    image: "postgres:10.11"
+    container_name: db
+    environment:
+      - "POSTGRES_USER=admin"
+      - "POSTGRES_PASSWORD=admin"
+    restart: always
+    expose: ["5432"]
+    networks:
+      - app_network
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  rails-app:
+    build:
+      context: ./app_e0
+    container_name: rails-app
+    ports: ["3000:3000"]
+    depends_on:
+      - db
+    restart: unless-stopped
+    links:
+      - db:db
+    networks:
+      - app_network
+
+  sub-broker:
+    build: .
+    container_name: sub-broker
+    depends_on:
+      - db
+    links:
+      - db:db
+    networks:
+      - app_network
+    
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  db-data:

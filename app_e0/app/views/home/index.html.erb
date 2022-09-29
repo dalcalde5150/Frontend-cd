@@ -1,0 +1,26 @@
+<h1>Home#index</h1>
+
+<% if user_signed_in? %>
+    <table>
+        <tr>
+            <th> Id </th>
+            <th> Tipo </th>
+            <th> Latitud </th>
+            <th> Longitud </th>
+            <th> Ubicación </th>
+            <th> Mensaje </th>
+            <th> Nivel </th>
+        </tr>
+        <% Event.all.each do |event| %>
+            <tr>
+                <td> <%= event.id %> </td>
+                <td> <%= event.event_type %> </td>
+                <td> <%= event.lat %> </td>
+                <td> <%= event.lon %> </td>
+                <td> <%= event.location %> </td>
+                <td> <%= event.message %> </td>
+                <td> <%= event.level %> </td>
+            </tr>
+        <% end %>
+    </table>
+<% end %>
