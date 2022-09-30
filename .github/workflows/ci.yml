@@ -16,5 +16,8 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag proyecto-base-grupo-26:$(date +%s)
-    - name: Run docker image
-      run: docker run ubuntu:proyecto-base-grupo-26:$(date +%s) /bin/bash
+
+    - uses: addnab/docker-run-action@v3
+      with:
+        image: test-image:latest
+        run: echo "hello world"
