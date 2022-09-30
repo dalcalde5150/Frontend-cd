@@ -19,4 +19,4 @@ jobs:
 
 
     - name: RuboCop Linter
-      run: docker run --rm --volume "$PWD:/app" kalashnikovisme/docker-rubocop:ruby-2.7.6 -a
+      run: docker run --rm --volume "$PWD:/app" kalashnikovisme/docker-rubocop:ruby-2.7.6
