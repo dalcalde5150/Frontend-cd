@@ -16,3 +16,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag proyecto-base-grupo-26:$(date +%s)
+
+
+    - name: RuboCop Linter
+      run: docker run --rm --volume "$PWD:/app" kalashnikovisme/docker-rubocop:ruby-2.7.6 -a
