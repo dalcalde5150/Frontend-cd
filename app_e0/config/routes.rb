@@ -11,5 +11,6 @@ Rails.application.routes.draw do
   }
   
   root 'home#index'
+  patch 'home', to: 'home#update', as: 'home_update'
 
 end

@@ -20,6 +20,15 @@
                 <td> <%= event.location %> </td>
                 <td> <%= event.message %> </td>
                 <td> <%= event.level %> </td>
+                <% @job = Job.find_by(user_id: current_user, event_id: event.id) %>
+                <% if @job.blank? == false %>
+                    <td> <%= @job.job_id %> </td>
+                <% end %>
+                <%= form_with(model: Event.new, method: :patch, url: home_update_path(:id => event.id, :lat => event.lat, :lon => event.lon)) do |f| %>
+                    <div>
+                        <td><%= f.submit "Calcular índice", :class => "button is-small" %><td>
+                    </div>
+                <% end %>
             </tr>
         <% end %>
     </table>
