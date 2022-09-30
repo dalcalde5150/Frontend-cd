@@ -1,1 +1,16 @@
+name: Lint Code Base
 
+on:
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  build:
+    # Name the Job
+    name: Lint Code Base
+    # Set the agent to run on
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: rubocop
+        run: docker container run -t --rm -v "$(pwd)":/work:ro shakiyam/rubocop
