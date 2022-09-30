@@ -16,3 +16,5 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag proyecto-base-grupo-26:$(date +%s)
+    - name: Run docker image
+      run: docker run -i -t ubuntu:proyecto-base-grupo-26:$(date +%s) /bin/bash
