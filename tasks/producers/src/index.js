@@ -5,7 +5,7 @@ const app = new Koa();
 const port = 8080;
 const Router = require('koa-router');
 
-const workersQueue = new Bull('workers', { redis: {port: 6379, host: 'localhost'}});
+const workersQueue = new Bull('workers', { redis: {port: 6379, host: redis}});
 
 const router = new Router();
 const job_router = new Router();

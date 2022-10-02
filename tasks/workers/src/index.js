@@ -1,6 +1,6 @@
 const Bull = require('bull');
 
-const workersQueue = new Bull('workers', { redis: {port: 6379, host: '127.0.0.1'}});
+const workersQueue = new Bull('workers', { redis: {port: 6379, host: redis}});
 
 workersQueue.process(async (job, done) => {
     console.log('-------------------------------')
