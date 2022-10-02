@@ -30,11 +30,16 @@ services:
     links:
       - db:db
 
+  producers:
+    build:
+      context: ./tasks/producers
+    container_name: producers
+    ports: ["8080:8080"]
+
   workers:
     build:
-      context: ./workers
+      context: ./tasks/workers
     container_name: workers
-    ports: ["8080:8080"]
 
   redis-service:
     image: "redis:7.0.5"
