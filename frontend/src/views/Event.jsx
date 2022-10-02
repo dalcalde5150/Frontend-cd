@@ -8,24 +8,16 @@ const axios = require('axios').default;
 
 async function getData() {
   try {
-    const response = await axios.get('http://e0carlosgarces.tk:3000/event');
-    console.log('funciona');
+    const response = await axios.get('http://localhost:3000/event');
     console.log(response);
-    return response
+    return response.data
   } catch (error) {
     console.log(error.response);
   }
 };
 
 const data = getData();
-
-/*
-  .then(function (res) {
-    console.log(res);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });*/
+console.log(data);
 
 let PageSize = 25;
 
