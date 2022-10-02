@@ -59,6 +59,13 @@ services:
       - REDIS_PASSWORD=1234
       - REDIS_HOST=redis
 
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    networks:
+      - app_network
+
   redis:
     image: "redis:7.0.5"
     container_name: redis
