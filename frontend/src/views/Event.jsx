@@ -1,18 +1,31 @@
 // Codigo obtenido de https://www.freecodecamp.org/news/build-a-custom-pagination-component-in-react/
-import data from '../data/mock-data.json';
 import React, { useState, useMemo } from 'react';
 import Pagination from '../Pagination';
 import './event.scss';
 
-const axios = require('axios');
+const axios = require('axios').default;
 
-axios.get('http://localhost:3000/events')
+
+async function getData() {
+  try {
+    const response = await axios.get('http://e0carlosgarces.tk:3000/event');
+    console.log('funciona');
+    console.log(response);
+    return response
+  } catch (error) {
+    console.log(error.response);
+  }
+};
+
+const data = getData();
+
+/*
   .then(function (res) {
     console.log(res);
   })
   .catch(function (error) {
     console.log(error);
-  });
+  });*/
 
 let PageSize = 25;
 
@@ -30,11 +43,13 @@ export default function Event() {
       <table>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>FIRST NAME</th>
-            <th>LAST NAME</th>
-            <th>EMAIL</th>
-            <th>PHONE</th>
+            <th>Id</th>
+            <th>Tipo de evento</th>
+            <th>Latitud</th>
+            <th>Longitud</th>
+            <th>Locación</th>
+            <th>Mensaje</th>
+            <th>Nivel</th>
           </tr>
         </thead>
         <tbody>
@@ -42,10 +57,12 @@ export default function Event() {
             return (
               <tr>
                 <td>{item.id}</td>
-                <td>{item.first_name}</td>
-                <td>{item.last_name}</td>
-                <td>{item.email}</td>
-                <td>{item.phone}</td>
+                <td>{item.event_type}</td>
+                <td>{item.lat}</td>
+                <td>{item.lon}</td>
+                <td>{item.location}</td>
+                <td>{item.message}</td>
+                <td>{item.level}</td>
               </tr>
             );
           })}
