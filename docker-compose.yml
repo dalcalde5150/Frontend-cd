@@ -40,7 +40,7 @@ services:
     build:
       context: ./tasks/producers
     container_name: producers
-    ports: ["8080:8080"]
+    expose: ["8080"]
     networks:
       - app_network
 
@@ -62,7 +62,6 @@ services:
 networks:
   app_network:
     driver: bridge
-    external: true
 
 volumes:
   db-data:

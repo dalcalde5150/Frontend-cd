@@ -31,6 +31,7 @@
 /public/packs
 /public/packs-test
 /node_modules
+*/node_modules
 /workers/node_modules
 /yarn-error.log
 /workers/yarn-error.log
