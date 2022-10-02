@@ -15,7 +15,7 @@ services:
 
   rails-app:
     build:
-      context: ./app_e0
+      context: ./backend/app_e0
     container_name: rails-app
     ports: ["3000:3000"]
     depends_on:
@@ -27,7 +27,7 @@ services:
       - app_network
 
   sub-broker:
-    build: .
+    build: ./backend
     container_name: sub-broker
     depends_on:
       - db
@@ -38,7 +38,7 @@ services:
 
   producers:
     build:
-      context: ./tasks/producers
+      context: ./backend/tasks/producers
     container_name: producers
     ports: ["8080:8080"]
     networks:
@@ -50,7 +50,7 @@ services:
 
   workers:
     build:
-      context: ./tasks/workers
+      context: ./backend/tasks/workers
     container_name: workers
     networks:
       - app_network
