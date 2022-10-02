@@ -43,6 +43,10 @@ services:
     expose: ["8080"]
     networks:
       - app_network
+    environment:
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_HOST=redis
 
   workers:
     build:
@@ -50,6 +54,10 @@ services:
     container_name: workers
     networks:
       - app_network
+    environment:
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_HOST=redis
 
   redis:
     image: "redis:7.0.5"
@@ -58,6 +66,7 @@ services:
     ports: ["6379:6379"]
     networks:
       - app_network
+    command: redis-server --requirepass ${REDIS_PASSWORD}
 
 networks:
   app_network:
