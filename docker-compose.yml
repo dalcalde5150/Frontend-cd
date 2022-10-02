@@ -65,6 +65,7 @@ services:
     container_name: frontend
     networks:
       - app_network
+    ports: ["3002:3002"]
 
   redis:
     image: "redis:7.0.5"
