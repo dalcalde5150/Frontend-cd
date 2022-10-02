@@ -15,6 +15,14 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
     msg = json.loads(msg.payload)
+    print(str(msg))
+
+    i = 0
+    while i <= len(msg['message']):
+        if msg['message'][len(msg['message'])-1-i] == "'" or msg['message'][len(msg['message'])-1-i] == '"':
+            msg['message'] = msg['message'][0:len(msg['message'])-i] + msg['message'][len(msg['message'])-1-i:]
+            i += 1
+        i += 1
 
     cur = conexion_db.cursor()
     try:
@@ -24,7 +32,7 @@ def on_message(client, userdata, msg):
     except TypeError:
         id = 1
     
-    cur.execute("INSERT INTO events (id, event_type, lat, lon, location, message, level, created_at, updated_at) VALUES ({}, '{}', {}, {}, '{}', '{}', {}, '{}', '{}');".format(id, msg["type"], msg["lat"], msg["lon"], msg["location"], msg["message"], msg["level"], datetime.datetime.now(), datetime.datetime.now()))
+    cur.execute("INSERT INTO events (id, event_type, lat, lon, location, message, level, created_at, updated_at) VALUES ({}, '{}', {}, {}, '{}', '{}', {}, '{}', '{}');".format(id, msg["type"], msg["lat"], msg["lon"], msg["location"], str(msg["message"]), msg["level"], datetime.datetime.now(), datetime.datetime.now()))
     conexion_db.commit()
     print("Datos guardados correctamente")
     cur.close()
