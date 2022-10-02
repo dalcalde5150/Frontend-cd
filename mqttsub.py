@@ -15,7 +15,6 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
     msg = json.loads(msg.payload)
-    print(str(msg))
 
     cur = conexion_db.cursor()
     try:
