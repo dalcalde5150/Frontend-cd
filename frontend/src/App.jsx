@@ -10,6 +10,7 @@ function App() {
             <a href="/"><div className="navi">Home</div></a>
             <a href="/signin"><div className="navi">Sign In</div></a>
             <a href="/register"><div className="navi">Register</div></a>
+            <a href="/event"><div className="navi">Event</div></a>
           </nav>
       </div>
     </header>
