@@ -12,5 +12,6 @@ Rails.application.routes.draw do
   
   root 'home#index'
   patch 'home', to: 'home#update', as: 'home_update'
+  get "/event", to: 'api#get_data', as: 'get_data'
 
 end
