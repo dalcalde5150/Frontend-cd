@@ -21,3 +21,9 @@ jobs:
     - name: Build the Docker frontend image
       working-directory: frontend
       run: docker build . --file Dockerfile --tag proyecto-base-grupo-26-frontend:$(date +%s)
+      
+    - name: Docker compose
+      run: docker compose up -d
+    - name: Run tests
+      run: docker compose exec rails-app rspec spec
+      
