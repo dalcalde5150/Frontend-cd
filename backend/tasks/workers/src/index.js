@@ -1,5 +1,9 @@
 const Bull = require('bull');
+const sgMail = require('@sendgrid/mail')
+const database = require('./database.js');
 
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 const workersQueue = new Bull('workers', { redis: {port: process.env.REDIS_PORT, host: process.env.REDIS_HOST, password: process.env.REDIS_PASSWORD}});
 
 workersQueue.process(async (job, done) => {
@@ -22,12 +26,37 @@ const calculo_indice = (job, done) => {
             }
         });
         let suma = dist_lvl.reduce((x, y) => x + y, 0);
+        sendEmail(job, suma/100);
+        saveResult(job, suma/100);
         done(null, suma/100);
     } catch (error) {
         done(error);
     }
 };
 
+// extraido de https://appdividend.com/2022/03/03/send-email-in-node-js/#:~:text=js-,To%20send%20an%20email%20in%20Node.,sending%20email%20messages%20between%20servers.
+const sendEmail = async (job, result) => {
+    const Job = await database.Job.findByPk(job.id);
+    const emailReceiver = await database.User.findByPk(Job.user_id);
+
+
+    let msg = {
+        from: 'jonanortizvega@uc.cl',
+        to: emailReceiver.email,
+        subject: 'Resultado Calculo Indice',
+        text: `El resultado del indice solicitado es ${result}`,
+    }
+
+    sgMail.send(msg);
+}
+
+
+const saveResult = async (job, result) => {
+    const Job = await database.Job.findByPk(job.id);
+    await Job.update({
+        resultado: result
+    })
+}
 
 /* código extraído de 
 https://reviblog.net/2016/01/08/javascript-obtener-la-distancia-distancia-en-kilometros-entre-dos-puntos-dadas-por-su-latitud-y-longitud/ */
