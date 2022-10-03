@@ -9,7 +9,7 @@ let data;
 
 async function getData() {
   try {
-    const response = await axios.get('https://e0carlosgarces:445/event');
+    const response = await axios.get('https://e0carlosgarces.tk:445/event');
     console.log(response)
     data = response['data'];
   } catch (error) {
