@@ -15,5 +15,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag proyecto-base-grupo-26:$(date +%s)
+      working-directory: proyecto-base-grupo-26
+      run: docker build . --file backend/Dockerfile --tag proyecto-base-grupo-26:$(date +%s)
 
