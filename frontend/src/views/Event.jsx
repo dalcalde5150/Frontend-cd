@@ -27,24 +27,24 @@ export default function Event() {
     getData().catch(console.error);
   }, []);
 
-  useEffect(() => {
-    const sendWorker = async () => {
-      try {
-        const response = await axios.post('https://e0carlosgarces.tk:445/worker', {
-          "id_evento": worker['id_evento'],
-          "id_usuario": worker['id_usuario'],
-          "mail_usuario": worker['mail_usuario'],
-          "latitud": worker['latitud'],
-          "longitud": worker['longitud']
-        });
-        console.log(response);
+  // useEffect(() => {
+  //   const sendWorker = async () => {
+  //     try {
+  //       const response = await axios.post('https://e0carlosgarces.tk:445/worker', {
+  //         "id_evento": worker['id_evento'],
+  //         "id_usuario": worker['id_usuario'],
+  //         "mail_usuario": worker['mail_usuario'],
+  //         "latitud": worker['latitud'],
+  //         "longitud": worker['longitud']
+  //       });
+  //       console.log(response);
         
-      } catch (error) {
-        console.log(error.response);
-      }
-    }
-    sendWorker().catch(console.error);
-  }, []);
+  //     } catch (error) {
+  //       console.log(error.response);
+  //     }
+  //   }
+  //   sendWorker().catch(console.error);
+  // }, []);
 
     const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
@@ -68,20 +68,18 @@ export default function Event() {
         <tbody>
           {currentTableData.map(item => {
             return (
-              <>
               <TableRow key={item.id} item={item} />
-              <button onClick={() => {
-                const worker = {
-                  "id_evento": item.id,
-                  "id_usuario": 1,
-                  "mail_usuario": "example@gmail.com",
-                  "latitud": item.lat,
-                  "longitud": item.lon
-                }
-                setWorker(worker);
-                sendWorker();
-              }}>Calcular</button>
-              </>
+              // <button onClick={() => {
+              //   const worker = {
+              //     "id_evento": item.id,
+              //     "id_usuario": 1,
+              //     "mail_usuario": "example@gmail.com",
+              //     "latitud": item.lat,
+              //     "longitud": item.lon
+              //   }
+              //   setWorker(worker);
+              //   sendWorker();
+              // }}>Calcular</button>
             );
           })}
         </tbody>
