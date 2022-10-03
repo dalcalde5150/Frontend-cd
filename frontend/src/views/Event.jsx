@@ -103,6 +103,7 @@ function TableRow({ item }) {
           "longitud": item.lon
         }
         setWorker(worker);
+        sendWorker();
       }}>Calcular</button></td>
     </tr>
   );
