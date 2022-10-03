@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id_user: 1
+  id_job: 1
+  resultado: 1.5
+
+two:
+  id_user: 1
+  id_job: 1
+  resultado: 1.5
