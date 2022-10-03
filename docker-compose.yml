@@ -66,6 +66,8 @@ services:
     networks:
       - app_network
     ports: ["3002:3002"]
+    environment:
+      - WDS_SOCKET_PORT=0
 
   redis:
     image: "redis:7.0.5"
