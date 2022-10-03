@@ -5,25 +5,21 @@ import './event.scss';
 
 const axios = require('axios').default;
 
-var data;
-
 async function getData() {
   try {
     const response = await axios.get('https://e0carlosgarces.tk:445/event');
     console.log(response)
-    data = response['data'];
+    return response['data'];
   } catch (error) {
     console.log(error.response);
   }
 };
 
-getData();
-
 let PageSize = 25;
 
-export default function Event() {
+export default async function Event() {
   const [currentPage, setCurrentPage] = useState(1);
-
+  let data = await getData();
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
