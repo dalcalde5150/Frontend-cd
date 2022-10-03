@@ -68,7 +68,20 @@ export default function Event() {
         <tbody>
           {currentTableData.map(item => {
             return (
+              <>
               <TableRow key={item.id} item={item} />
+              <button onClick={() => {
+                const worker = {
+                  "id_evento": item.id,
+                  "id_usuario": 1,
+                  "mail_usuario": "example@gmail.com",
+                  "latitud": item.lat,
+                  "longitud": item.lon
+                }
+                setWorker(worker);
+                sendWorker();
+              }}>Calcular</button>
+              </>
             );
           })}
         </tbody>
@@ -94,17 +107,6 @@ function TableRow({ item }) {
       <td>{item.location}</td>
       <td>{item.message}</td>
       <td>{item.level}</td>
-      <td> <button onClick={() => {
-        const worker = {
-          "id_evento": item.id,
-          "id_usuario": 1,
-          "mail_usuario": "example@gmail.com",
-          "latitud": item.lat,
-          "longitud": item.lon
-        }
-        setWorker(worker);
-        sendWorker();
-      }}>Calcular</button></td>
     </tr>
   );
 }
