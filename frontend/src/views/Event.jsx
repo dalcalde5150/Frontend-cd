@@ -30,7 +30,7 @@ export default function Event() {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
     return data.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage]);
+  }, [currentPage, data]);
   return (
     <>
       <table>
@@ -48,15 +48,7 @@ export default function Event() {
         <tbody>
           {currentTableData.map(item => {
             return (
-              <tr>
-                <td>{item.id}</td>
-                <td>{item.event_type}</td>
-                <td>{item.lat}</td>
-                <td>{item.lon}</td>
-                <td>{item.location}</td>
-                <td>{item.message}</td>
-                <td>{item.level}</td>
-              </tr>
+              <TableRow key={item.id} item={item} />
             );
           })}
         </tbody>
@@ -69,6 +61,20 @@ export default function Event() {
         onPageChange={page => setCurrentPage(page)}
       />
     </>
+  );
+}
+
+function TableRow({ item }) {
+  return (
+    <tr>
+      <td>{item.id}</td>
+      <td>{item.event_type}</td>
+      <td>{item.lat}</td>
+      <td>{item.lon}</td>
+      <td>{item.location}</td>
+      <td>{item.message}</td>
+      <td>{item.level}</td>
+    </tr>
   );
 }
 /*
