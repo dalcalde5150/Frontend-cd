@@ -3,7 +3,10 @@ import { DataTypes } from '@sequelize/core';
 
 // DataBase Connection
 // todo: crear conexion a base de datos
-const sequelize = new Sequelize('postgres://user:pass@example.com:5432/dbname')
+const sequelize = new Sequelize('e0_app_development', 'admin', 'admin', {
+    host: 'db',
+    dialect: 'postgres'
+})
 
 const User = sequelize.define('user', {
     id: {
