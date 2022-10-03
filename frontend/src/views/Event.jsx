@@ -5,19 +5,18 @@ import './event.scss';
 
 const axios = require('axios').default;
 
+let data;
 
 async function getData() {
   try {
-    const response = await axios.get('http://44.208.40.132:3000/event');
-    console.log(response);
-    return response.data
+    const response = await axios.get('http://e0carlosgarces.tk:3000/event');
+    data = response['data'];
   } catch (error) {
     console.log(error.response);
   }
 };
 
-const data = getData();
-console.log(data);
+getData();
 
 let PageSize = 25;
 
