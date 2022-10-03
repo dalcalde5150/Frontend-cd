@@ -9,6 +9,7 @@ let PageSize = 25;
 
 export default function Event() {
   const [data, setData] = useState([]);
+  const [worker, setWorker] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   
   useEffect(() => {
@@ -24,6 +25,25 @@ export default function Event() {
       }
     }
     getData().catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    const sendWorker = async () => {
+      try {
+        const response = await axios.post('https://e0carlosgarces.tk:445/worker', {
+          "id_evento": worker['id_evento'],
+          "id_usuario": worker['id_usuario'],
+          "mail_usuario": worker['mail_usuario'],
+          "latitud": worker['latitud'],
+          "longitud": worker['longitud']
+        });
+        console.log(response);
+        
+      } catch (error) {
+        console.log(error.response);
+      }
+    }
+    sendWorker().catch(console.error);
   }, []);
 
     const currentTableData = useMemo(() => {
@@ -74,6 +94,16 @@ function TableRow({ item }) {
       <td>{item.location}</td>
       <td>{item.message}</td>
       <td>{item.level}</td>
+      <td> <button onClick={() => {
+        const worker = {
+          "id_evento": item.id,
+          "id_usuario": 1,
+          "mail_usuario": "example@gmail.com",
+          "latitud": item.lat,
+          "longitud": item.lon
+        }
+        setWorker(worker);
+      }}>Calcular</button></td>
     </tr>
   );
 }
