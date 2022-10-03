@@ -5,7 +5,7 @@ import './event.scss';
 
 const axios = require('axios').default;
 
-let data;
+var data;
 
 async function getData() {
   try {
