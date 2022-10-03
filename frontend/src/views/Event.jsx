@@ -8,7 +8,7 @@ const axios = require('axios').default;
 
 async function getData() {
   try {
-    const response = await axios.get('http://localhost:3000/event');
+    const response = await axios.get('http://44.208.40.132:3000/event');
     console.log(response);
     return response.data
   } catch (error) {
