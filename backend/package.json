@@ -1,0 +1,24 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "src/app.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+  "dependencies": {
+    "@koa/cors": "^4.0.0",
+    "dotenv": "^16.0.3",
+    "koa": "^2.13.4",
+    "koa-body": "^5.0.0",
+    "koa-logger": "^3.2.1",
+    "koa-router": "^12.0.0",
+    "pg": "^8.8.0",
+    "sequelize": "^6.25.3",
+    "sequelize-cli": "^6.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
