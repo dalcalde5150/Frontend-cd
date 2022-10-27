@@ -9,16 +9,17 @@ const sequelize = new Sequelize('e0_app_development', process.env.DB_USERNAME, p
     dialect: 'postgres'
 });
 
-const User = sequelize.define('User', {
+const User = sequelize.define(sequelize.User, {
     id: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        primaryKey: true
     },
     email: {
         type: DataTypes.STRING
     }
 });
 
-const Job = sequelize.define('job', {
+const Job = sequelize.define(sequelize.JobResult, {
     user_id: {
         type: DataTypes.INTEGER
     },
@@ -26,6 +27,6 @@ const Job = sequelize.define('job', {
         type: DataTypes.INTEGER
     },
     resultado: {
-        type: DataType.FLOAT
+        type: DataTypes.FLOAT
     }
 });

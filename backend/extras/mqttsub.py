@@ -5,7 +5,7 @@ import json
 import psycopg2
 import datetime
 
-conexion_db = psycopg2.connect(database='e0_app_development', user='admin', password='admin')
+conexion_db = psycopg2.connect(host='db', database='e0_app_development', user='admin', password='admin')
 
 
 
@@ -20,8 +20,15 @@ def on_message(client, userdata, msg):
     i = 0
     while i <= len(msg['message']):
         if msg['message'][len(msg['message'])-1-i] == "'" or msg['message'][len(msg['message'])-1-i] == '"':
-            msg['message'] = msg['message'][0:len(msg['message'])-i] + msg['message'][len(msg['message'])-1-i:]
-            i += 1
+            msg['message'] = msg['message'][0:len(msg['message'])-1-i] + msg['message'][len(msg['message'])-i:]
+            continue
+        i += 1
+
+    i = 0
+    while i <= len(msg['location']):
+        if msg['location'][len(msg['location'])-1-i] == "'" or msg['location'][len(msg['location'])-1-i] == '"':
+            msg['location'] = msg['location'][0:len(msg['location'])-1-i] + msg['location'][len(msg['location'])-i:]
+            continue
         i += 1
 
     cur = conexion_db.cursor()

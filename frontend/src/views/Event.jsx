@@ -11,12 +11,36 @@ export default function Event() {
   const [data, setData] = useState([]);
   const [worker, setWorker] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const handleWorker = async (item) => {
+    const worker = {
+      "id_evento": item.id,
+      "id_usuario": 1,
+      "mail_usuario": "example@gmail.com",
+      "latitud": item.lat,
+      "longitud": item.lon
+    }
+    setWorker(worker);
+    try {
+      const response = await axios.post('http://localhost:3000/workers/new', {
+        "id_evento": worker['id_evento'],
+        "id_usuario": worker['id_usuario'],
+        "mail_usuario": worker['mail_usuario'],
+        "latitud": worker['latitud'],
+        "longitud": worker['longitud']
+      });
+      console.log(response);
+      
+    } catch (error) {
+      console.log(error.response);
+    }
+
+  }
   
   useEffect(() => {
     const getData = async () => {
       try {
         const response = await axios.get('http://localhost:3000/events');
-        console.log(response);
         const res_data = response['data'];
 
         setData(res_data);
@@ -27,30 +51,12 @@ export default function Event() {
     getData().catch(console.error);
   }, []);
 
-  // useEffect(() => {
-  //   const sendWorker = async () => {
-  //     try {
-  //       const response = await axios.post('https://e0carlosgarces.tk:445/worker', {
-  //         "id_evento": worker['id_evento'],
-  //         "id_usuario": worker['id_usuario'],
-  //         "mail_usuario": worker['mail_usuario'],
-  //         "latitud": worker['latitud'],
-  //         "longitud": worker['longitud']
-  //       });
-  //       console.log(response);
-        
-  //     } catch (error) {
-  //       console.log(error.response);
-  //     }
-  //   }
-  //   sendWorker().catch(console.error);
-  // }, []);
-
     const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
     return data.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, data]);
+  
   return (
     <>
       <table>
@@ -63,23 +69,13 @@ export default function Event() {
             <th>Locación</th>
             <th>Mensaje</th>
             <th>Nivel</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           {currentTableData.map(item => {
             return (
-              <TableRow key={item.id} item={item} />
-              // <button onClick={() => {
-              //   const worker = {
-              //     "id_evento": item.id,
-              //     "id_usuario": 1,
-              //     "mail_usuario": "example@gmail.com",
-              //     "latitud": item.lat,
-              //     "longitud": item.lon
-              //   }
-              //   setWorker(worker);
-              //   sendWorker();
-              // }}>Calcular</button>
+              <TableRow key={item.id} item={item} handleWorker={handleWorker} />
             );
           })}
         </tbody>
@@ -95,7 +91,7 @@ export default function Event() {
   );
 }
 
-function TableRow({ item }) {
+function TableRow({ item, handleWorker }) {
   return (
     <tr>
       <td>{item.id}</td>
@@ -105,6 +101,7 @@ function TableRow({ item }) {
       <td>{item.location}</td>
       <td>{item.message}</td>
       <td>{item.level}</td>
+      <td><button onClick={() => handleWorker(item)}>Calcular</button></td>
     </tr>
   );
 }
