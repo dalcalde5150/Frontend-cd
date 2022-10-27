@@ -6,7 +6,7 @@ const cors = require('@koa/cors');
 const koaBody = require('koa-body');
 const koaLogger = require('koa-logger');
 const router = require('./routes');
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 
 // Se crea la app como instancia de Koa
 const app = new Koa();

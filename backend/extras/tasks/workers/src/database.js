@@ -1,21 +1,22 @@
 const { Sequelize } = require('sequelize');
-import { DataTypes } from '@sequelize/core';
+const { DataTypes } = require('@sequelize/core');
+require('dotenv').config();
 
 // DataBase Connection
 // todo: crear conexion a base de datos
-const sequelize = new Sequelize('e0_app_development', 'admin', 'admin', {
-    host: 'db',
+const sequelize = new Sequelize('e0_app_development', process.env.DB_USERNAME, process.env.DB_PASSWORD, {
+    // host: 'db',
     dialect: 'postgres'
-})
+});
 
-const User = sequelize.define('user', {
+const User = sequelize.define('User', {
     id: {
         type: DataTypes.INTEGER
     },
     email: {
         type: DataTypes.STRING
     }
-})
+});
 
 const Job = sequelize.define('job', {
     user_id: {
@@ -27,4 +28,4 @@ const Job = sequelize.define('job', {
     resultado: {
         type: DataType.FLOAT
     }
-})
+});

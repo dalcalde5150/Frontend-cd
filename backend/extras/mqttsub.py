@@ -5,7 +5,7 @@ import json
 import psycopg2
 import datetime
 
-conexion_db = psycopg2.connect(host='db', database='e0_app_development', user='admin', password='admin')
+conexion_db = psycopg2.connect(database='e0_app_development', user='admin', password='admin')
 
 
 
@@ -26,13 +26,13 @@ def on_message(client, userdata, msg):
 
     cur = conexion_db.cursor()
     try:
-        cur.execute("SELECT MAX(id) FROM events")
+        cur.execute("SELECT MAX(id) FROM \"Events\"")
         consulta = cur.fetchone()
         id = int(consulta[0]) + 1
     except TypeError:
         id = 1
     
-    cur.execute("INSERT INTO events (id, event_type, lat, lon, location, message, level, created_at, updated_at) VALUES ({}, '{}', {}, {}, '{}', '{}', {}, '{}', '{}');".format(id, msg["type"], msg["lat"], msg["lon"], msg["location"], str(msg["message"]), msg["level"], datetime.datetime.now(), datetime.datetime.now()))
+    cur.execute("INSERT INTO \"Events\" (id, event_type, lat, lon, location, message, level, \"createdAt\", \"updatedAt\") VALUES ({}, '{}', {}, {}, '{}', '{}', {}, '{}', '{}');".format(id, msg["type"], msg["lat"], msg["lon"], msg["location"], str(msg["message"]), msg["level"], datetime.datetime.now(), datetime.datetime.now()))
     conexion_db.commit()
     print("Datos guardados correctamente")
     cur.close()
