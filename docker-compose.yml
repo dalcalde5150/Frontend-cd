@@ -13,10 +13,10 @@ services:
     networks:
       - app_network
 
-  rails-app:
+  backend:
     build:
-      context: ./backend/app_e0
-    container_name: rails-app
+      context: ./backend
+    container_name: backend
     ports: ["3000:3000"]
     depends_on:
       - db

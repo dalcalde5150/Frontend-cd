@@ -15,7 +15,7 @@ export default function Event() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get('https://e0carlosgarces.tk:445/event');
+        const response = await axios.get('http://localhost:3000/events');
         console.log(response);
         const res_data = response['data'];
 
