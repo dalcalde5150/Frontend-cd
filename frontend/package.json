@@ -20,6 +20,9 @@
   "scripts": {
     "start": "PORT=3002 react-scripts start",
     "build": "react-scripts build",
+    "s3-deploy": "aws s3 sync build/ s3://frontend-arqsis",
+    "s3-invalidate": "aws cloudfront create-invalidation --distribution-id E21CSYWATAQJY1 --paths '/*'",
+    "deploy": "yarn build && yarn s3-deploy && yarn s3-invalidate",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
