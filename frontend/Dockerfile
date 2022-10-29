@@ -1,7 +1,7 @@
-FROM node:14
+FROM node:16
 
-COPY . /usr/src/app
-WORKDIR /usr/src/app
+COPY . /usr/src/app/frontend
+WORKDIR /usr/src/app/frontend
 
 RUN yarn install --check-files
 

@@ -7,8 +7,7 @@ RUN pip install ez_setup
 RUN pip install paho-mqtt
 RUN pip install psycopg2
 
-RUN mkdir -p /usr/src/app
-COPY mqttsub.py /usr/src/app
-WORKDIR /usr/src/app
+COPY mqttsub.py /usr/src/app/backend/extras
+WORKDIR /usr/src/app/backend/extras
 
-CMD ["python3", "/usr/src/app/mqttsub.py"]
+CMD ["python3", "/usr/src/app/backend/extras/mqttsub.py"]

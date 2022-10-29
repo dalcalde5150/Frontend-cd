@@ -9,7 +9,34 @@ const sequelize = new Sequelize('e0_app_development', process.env.DB_USERNAME, p
     dialect: 'postgres'
 });
 
-const User = sequelize.define(sequelize.User, {
+const Event = sequelize.define("\"Events\"", {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true
+    },
+    lat: {
+        type: DataTypes.FLOAT
+    },
+    lon: {
+        type: DataTypes.FLOAT
+    },
+    location: {
+        type: DataTypes.STRING
+    },
+    message: {
+        type: DataTypes.STRING
+    },
+    level: {
+        type: DataTypes.INTEGER
+    },
+    event_type: {
+        type: DataTypes.STRING
+    }
+}, {
+    freezeTableName: true
+});
+
+const User = sequelize.define("\"Users\"", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true
@@ -17,16 +44,22 @@ const User = sequelize.define(sequelize.User, {
     email: {
         type: DataTypes.STRING
     }
+}, {
+    freezeTableName: true
 });
 
-const Job = sequelize.define(sequelize.JobResult, {
-    user_id: {
+const Job = sequelize.define("\"Jobs\"", {
+    id_user: {
         type: DataTypes.INTEGER
     },
-    job_id: {
+    id_event: {
         type: DataTypes.INTEGER
     },
     resultado: {
         type: DataTypes.FLOAT
     }
+}, {
+    freezeTableName: true
 });
+
+module.exports = { Event, User, Job };

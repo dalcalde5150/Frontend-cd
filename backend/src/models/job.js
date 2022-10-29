@@ -10,12 +10,14 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      this.belongsTo(models.User, { foreignKey: 'id_user' });
+      this.belongsTo(models.Event, { foreignKey: 'id_event' });
     }
   }
   Job.init({
     id_user: DataTypes.INTEGER,
-    id_event: DataTypes.INTEGER
+    id_event: DataTypes.INTEGER,
+    resultado: DataTypes.FLOAT
   }, {
     sequelize,
     modelName: 'Job',
