@@ -36,6 +36,7 @@ services:
     depends_on:
       - db
       - backend
+    restart: always
     links:
       - db:db
     networks:
@@ -46,6 +47,7 @@ services:
       context: ./backend/extras/tasks/producers
     container_name: producers
     ports: ["8080:8080"]
+    restart: always
     networks:
       - app_network
     depends_on:
@@ -67,6 +69,7 @@ services:
       - redis
       - producers
       - db
+    restart: always
     environment:
       - REDIS_PORT=6379
       - REDIS_PASSWORD=1234
