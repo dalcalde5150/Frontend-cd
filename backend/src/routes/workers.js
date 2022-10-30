@@ -33,7 +33,7 @@ router.post('new_job', '/new', async (ctx) => {
             }
         });
         ctx.request.body.job_id = job.id;
-        const res = await axios.post('http://localhost:8080/job', ctx.request.body);
+        const res = await axios.post('http://44.208.40.132:8080/job', ctx.request.body);
         console.log(res.data);
         ctx.body = 'new job';
         ctx.status = 200;
