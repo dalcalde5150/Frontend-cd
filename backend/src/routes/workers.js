@@ -48,7 +48,7 @@ router.get('get_job', '/:id', async (ctx) => {
 });
 
 router.get('get_heartbeat', '/', async (ctx) => {
-    const res = await axios.get('http://localhost:8080/heartbeat');
+    const res = await axios.get('http://44.208.40.132:8080/heartbeat');
     console.log(res.data);
     ctx.body = res.data;
     ctx.status = 200;
