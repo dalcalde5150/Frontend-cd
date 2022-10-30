@@ -1,5 +1,6 @@
 FROM node:16
 
+RUN mkdir -p /usr/src/app/extras/tasks/producers
 COPY . /usr/src/app/extras/tasks/producers
 WORKDIR /usr/src/app/extras/tasks/producers
 
