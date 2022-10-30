@@ -9,6 +9,7 @@
     "bull": "^4.10.1",
     "dotenv": "^16.0.3",
     "nodemailer": "^6.8.0",
+    "pg": "^8.8.0",
     "sequelize": "^6.25.3"
   },
   "scripts": {
