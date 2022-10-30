@@ -7,4 +7,4 @@ RUN yarn install --check-files
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "yarn sequelize-cli db:migrate && yarn start"]
+CMD ["sh", "-c", "yarn sequelize-cli db:create && yarn sequelize-cli db:migrate && yarn start"]
