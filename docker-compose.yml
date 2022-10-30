@@ -23,7 +23,6 @@ services:
     environment:
       - DB_USERNAME=admin
       - DB_PASSWORD=admin
-      - DB_HOST=db
     restart: unless-stopped
     links:
       - db:db
