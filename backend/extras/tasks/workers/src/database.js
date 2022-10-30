@@ -5,7 +5,7 @@ require('dotenv').config();
 // DataBase Connection
 // todo: crear conexion a base de datos
 const sequelize = new Sequelize('e0_app_development', process.env.DB_USERNAME, process.env.DB_PASSWORD, {
-    // host: 'db',
+    host: 'db',
     dialect: 'postgres'
 });
 
