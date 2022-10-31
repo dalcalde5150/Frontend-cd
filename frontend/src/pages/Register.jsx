@@ -1,7 +1,13 @@
-import { React, useState } from "react";
+import { useState} from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from '../components/auth';
 import axios from "axios";
 
 export default function Register() {
+
+    const [user, setUser] = useState('');
+    const auth = useAuth();
+    const navigate = useNavigate();
 
     const [data, setData] = useState({
         username: "",
@@ -15,13 +21,16 @@ export default function Register() {
             ...data,
             [e.target.name]: e.target.value
         });
+        setUser(data.username);
     }
 
     const sendData = async (event) => {
         event.preventDefault();
         try {
             const res = await axios.post('https://api.arqsis-26.tk/users/register', data);
-            console.log(res.data);
+            setUser(res.data.id);
+            auth.login(user)
+            navigate('/', { replace: true })
         } catch (error) {
             console.log(error.response);
         }
@@ -48,7 +57,7 @@ export default function Register() {
                     <input type="text" name="password2" onChange={handleData} required  />
                 </div>
                 <div>
-                    <input class="margin-title1" type="submit" name="Crear" value="Registrarse" />
+                <button type="sumbit"> Registrarse </button>
                 </div>
             </form>
         </div>  
