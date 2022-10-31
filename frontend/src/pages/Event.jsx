@@ -1,5 +1,6 @@
 // Codigo obtenido de https://www.freecodecamp.org/news/build-a-custom-pagination-component-in-react/
 import React, { useState, useMemo, useEffect } from 'react';
+import { useAuth } from '../components/auth';
 import Pagination from '../Pagination';
 import './event.scss';
 
@@ -12,16 +13,18 @@ export default function Event() {
   const [worker, setWorker] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [active, setActive] = useState("No disponible");
+  
+  const auth = useAuth();
 
   const handleWorker = (item) => {
     const new_worker = {
       "id_event": item.id,
-      "id_user": 1,
+      "id_user": auth.user,
       "latitud": item.lat,
       "longitud": item.lon
     }
     axios.post('https://api.arqsis-26.tk/workers/new', new_worker)
-    .then((response) => {
+    .then((res) => {
       setWorker(new_worker);
     }).catch((error) => {
       console.log(error);
@@ -31,7 +34,7 @@ export default function Event() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get('https://api.arqsis-26.tk/events');
+        const response = await axios.get(`https://api.arqsis-26.tk/events/${auth.user}`);
         const res_data = response['data'];
         setData(res_data);
       } catch (error) {

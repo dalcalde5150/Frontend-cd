@@ -5,7 +5,6 @@ import axios from "axios";
 
 export default function SignIn() {
 
-    const [user, setUser] = useState('');
     const auth = useAuth();
     const navigate = useNavigate();
 
@@ -19,15 +18,13 @@ export default function SignIn() {
             ...data,
             [e.target.name]: e.target.value
         });
-        setUser(data.username);
     }
 
     const sendData = async (event) => {
         event.preventDefault();
         try {
             const res = await axios.post('https://api.arqsis-26.tk/users/login', data);
-            setUser(res.data.id);
-            auth.login(user)
+            auth.login(res.data.id)
             navigate('/', { replace: true })
         } catch (error) {
             console.log(error.response);
@@ -44,7 +41,7 @@ export default function SignIn() {
                 </div>
                 <div>
                     <label for="password">Password</label>
-                    <input type="text" name="password" onChange={handleData} required />
+                    <input type="password" name="password" onChange={handleData} required />
                 </div>
                 <div>
                     <button type="sumbit"> Ingresar </button>
