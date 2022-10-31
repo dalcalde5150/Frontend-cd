@@ -12,8 +12,8 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - uses: jakejarvis/s3-sync-action@master
-      working-directory: frontend/public
       with:
+        working-directory: frontend/public
         args: --acl public-read --follow-symlinks --delete
       env:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
