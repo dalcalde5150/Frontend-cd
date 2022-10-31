@@ -3,27 +3,6 @@ const router = new Router();
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 
-// router.post('login', '/login', async (ctx) => {
-//     try{
-//         const user = await ctx.orm.User.findOne({
-//             where: { 
-//                 username: ctx.request.body.username
-//             }
-//         });
-//         if (!user) {
-//             ctx.throw(400, 'Nombre de usuario incorrecto');
-//         }
-//         const validPassword = await bcrypt.compare(ctx.request.body.password, user.password);
-//         if (!validPassword) {
-//             ctx.throw(400, 'Contraseña incorrecta');
-//         }
-//         ctx.status = 200;
-//         ctx.body = {'message': 'Usuario logueado exitosamente', 'id': user.id};
-//     } catch (error) {
-//         ctx.throw(400, error.message);
-//     }
-// });
-
 router.post('register', '/register', async (ctx) => {
     const salt = await bcrypt.genSalt(10);
     const user = await ctx.orm.User.create({
@@ -43,14 +22,39 @@ router.post('login', '/login', async (ctx) => {
             }
         });
         if (!user) {
-            ctx.throw(400, 'Nombre de usuario incorrecto');
+            ctx.throw('Nombre de usuario no existe', 404);
         }
         const validPassword = await bcrypt.compare(ctx.request.body.password, user.encrypted_password);
         if (!validPassword) {
-            ctx.throw(400, 'Contraseña incorrecta');
+            ctx.throw('Contraseña incorrecta', 401);
         }
-        ctx.status = 200;
+
+        const new_session = await ctx.orm.Session.create({
+            user_id: user.id
+        });
+
+        ctx.session.sessionid = new_session.id;
+
+        ctx.status = 201;
         ctx.body = {'message': 'Usuario logueado exitosamente', 'id': user.id};
+    }
+    catch (error) {
+        ctx.throw(400, error.message);
+    }
+});
+
+router.delete('logout', '/logout', async (ctx) => {
+    try{
+        await ctx.orm.Session.destroy({
+            where: {
+                id: ctx.session.sessionid
+            }
+        });
+
+        ctx.session.sessionid = null;
+
+        ctx.status = 200;
+        ctx.body = {'message': 'Usuario deslogueado exitosamente'};
     }
     catch (error) {
         ctx.throw(400, error.message);

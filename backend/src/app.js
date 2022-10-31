@@ -6,6 +6,7 @@ const cors = require('@koa/cors');
 const koaBody = require('koa-body');
 const koaLogger = require('koa-logger');
 const router = require('./routes');
+const session = require('koa-session');
 const port = process.env.PORT || 3000;
 
 // Se crea la app como instancia de Koa
@@ -15,13 +16,20 @@ const app = new Koa();
 app.context.orm = orm;
 
 // Se asigna el cors a la aplicación
-app.use(cors());
+app.use(cors({ credentials: true}));
 
 // Logs de los requests
 app.use(koaLogger());
 
 // Parse request body
 app.use(koaBody());
+
+app.keys = [`${process.env.APP_KEYS}`];
+
+const CONFIG = {
+    httpOnly: false,
+}
+app.use(session(CONFIG, app));
 
 // Se asigna el router a la aplicación
 app.use(router.routes());

@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import styled from 'styled-components';
-import { useAuth } from "../components/auth";
+import { useAuth } from "../contexts/auth";
 
 export const Navbar = () => {
 

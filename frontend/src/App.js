@@ -1,15 +1,18 @@
 import { Routes, Route } from 'react-router-dom';
+import axios from 'axios';
 
 import Home from './pages/Home';
 import Signin from './pages/SignIn';
 import Register from './pages/Register';
 import Event from './pages/Event';
 
-import { AuthProvider } from './components/auth';
+import { AuthProvider } from './contexts/auth';
 import { Navbar } from './components/Navbar';
 import { Profile } from './components/Profile';
 import { RequireAuth } from './components/RequireAuth';
 import './App.css';
+
+axios.defaults.withCredentials = true;
 
 export default function App() {
 
