@@ -6,11 +6,17 @@
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
     "@sequelize/core": "^7.0.0-alpha.10",
-    "bull": "^4.10.0",
+    "bull": "^4.10.1",
     "dotenv": "^16.0.3",
+    "nodemailer": "^6.8.0",
+    "pg": "^8.8.0",
     "sequelize": "^6.25.3"
   },
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
   }
 }

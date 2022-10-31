@@ -11,48 +11,62 @@ export default function Event() {
   const [data, setData] = useState([]);
   const [worker, setWorker] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [active, setActive] = useState("No disponible");
+
+  const handleWorker = (item) => {
+    const new_worker = {
+      "id_event": item.id,
+      "id_user": 1,
+      "latitud": item.lat,
+      "longitud": item.lon
+    }
+    axios.post('https://byz0ue8tw7.execute-api.us-east-1.amazonaws.com/prod/workers/new', new_worker)
+    .then((response) => {
+      setWorker(new_worker);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
   
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/events');
-        console.log(response);
+        const response = await axios.get('https://byz0ue8tw7.execute-api.us-east-1.amazonaws.com/prod/events');
         const res_data = response['data'];
-
         setData(res_data);
       } catch (error) {
         console.log(error.response);
       }
     }
     getData().catch(console.error);
+  }, [worker]);
+
+  useEffect(() => {
+    const getStatus = async () => {
+      try {
+        const response = await axios.get('https://byz0ue8tw7.execute-api.us-east-1.amazonaws.com/prod/workers');
+        if (response['data'] == true) {
+          setActive("Disponible");
+        } else {
+          setActive("No disponible");
+        }
+      } catch (error) {
+        setActive("No disponible");
+        console.log(error.response);
+      }
+    }
+    getStatus().catch(console.error);
   }, []);
 
-  // useEffect(() => {
-  //   const sendWorker = async () => {
-  //     try {
-  //       const response = await axios.post('https://e0carlosgarces.tk:445/worker', {
-  //         "id_evento": worker['id_evento'],
-  //         "id_usuario": worker['id_usuario'],
-  //         "mail_usuario": worker['mail_usuario'],
-  //         "latitud": worker['latitud'],
-  //         "longitud": worker['longitud']
-  //       });
-  //       console.log(response);
-        
-  //     } catch (error) {
-  //       console.log(error.response);
-  //     }
-  //   }
-  //   sendWorker().catch(console.error);
-  // }, []);
-
-    const currentTableData = useMemo(() => {
+  const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
     return data.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, data]);
+  
   return (
     <>
+      <h3>Servicio de workers: {active}</h3>
       <table>
         <thead>
           <tr>
@@ -63,23 +77,21 @@ export default function Event() {
             <th>Locación</th>
             <th>Mensaje</th>
             <th>Nivel</th>
+            <th>Coeficiente</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           {currentTableData.map(item => {
+            if (item.Jobs.length == 0) {
+              item.coef = "No calculado";
+            } else if (item.Jobs[0]["resultado"] == -1) {
+              item.coef = "Pendiente";
+            } else {
+              item.coef = item.Jobs[0]["resultado"];
+            }
             return (
-              <TableRow key={item.id} item={item} />
-              // <button onClick={() => {
-              //   const worker = {
-              //     "id_evento": item.id,
-              //     "id_usuario": 1,
-              //     "mail_usuario": "example@gmail.com",
-              //     "latitud": item.lat,
-              //     "longitud": item.lon
-              //   }
-              //   setWorker(worker);
-              //   sendWorker();
-              // }}>Calcular</button>
+              <TableRow key={item.id} item={item} handleWorker={handleWorker} />
             );
           })}
         </tbody>
@@ -95,7 +107,7 @@ export default function Event() {
   );
 }
 
-function TableRow({ item }) {
+function TableRow({ item, handleWorker }) {
   return (
     <tr>
       <td>{item.id}</td>
@@ -105,69 +117,8 @@ function TableRow({ item }) {
       <td>{item.location}</td>
       <td>{item.message}</td>
       <td>{item.level}</td>
+      <td>{item.coef}</td>
+      <td><button onClick={() => handleWorker(item)}>Calcular</button></td>
     </tr>
   );
 }
-/*
-async function getData() {
-  try {
-    const response = await axios.get('https://e0carlosgarces.tk:445/event');
-    console.log(response);
-    return response['data'];
-  } catch (error) {
-    console.log(error.response);
-  }
-};
-
-let PageSize = 25;
-
-export default async function Event() {
-  const [currentPage, setCurrentPage] = useState(1);
-  let data = await getData();
-  const currentTableData = useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * PageSize;
-    const lastPageIndex = firstPageIndex + PageSize;
-    return data.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage]);
-
-  return (
-    <>
-      <table>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Tipo de evento</th>
-            <th>Latitud</th>
-            <th>Longitud</th>
-            <th>Locación</th>
-            <th>Mensaje</th>
-            <th>Nivel</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentTableData.map(item => {
-            return (
-              <tr>
-                <td>{item.id}</td>
-                <td>{item.event_type}</td>
-                <td>{item.lat}</td>
-                <td>{item.lon}</td>
-                <td>{item.location}</td>
-                <td>{item.message}</td>
-                <td>{item.level}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <Pagination
-        className="pagination-bar"
-        currentPage={currentPage}
-        totalCount={data.length}
-        pageSize={PageSize}
-        onPageChange={page => setCurrentPage(page)}
-      />
-    </>
-  );
-}
-*/

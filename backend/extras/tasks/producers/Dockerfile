@@ -1,7 +1,8 @@
 FROM node:16
 
-COPY . /usr/src/app
-WORKDIR /usr/src/app
+RUN mkdir -p /usr/src/app/extras/tasks/producers
+COPY . /usr/src/app/extras/tasks/producers
+WORKDIR /usr/src/app/extras/tasks/producers
 
 RUN yarn install --check-files
 

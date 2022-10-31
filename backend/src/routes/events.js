@@ -3,7 +3,9 @@ const router = new Router();
 
 router.get('get-events', '/', async (ctx) => {
     try {
-        const events_list = await ctx.orm.Event.findAll();
+        const events_list = await ctx.orm.Event.findAll({
+            include: ctx.orm.Job
+        });
         ctx.body = events_list;
         ctx.status = 200;
     } catch (err) {

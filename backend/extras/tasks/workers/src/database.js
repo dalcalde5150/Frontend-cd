@@ -5,27 +5,61 @@ require('dotenv').config();
 // DataBase Connection
 // todo: crear conexion a base de datos
 const sequelize = new Sequelize('e0_app_development', process.env.DB_USERNAME, process.env.DB_PASSWORD, {
-    // host: 'db',
+    host: 'db',
     dialect: 'postgres'
 });
 
-const User = sequelize.define('User', {
+const Event = sequelize.define("\"Events\"", {
     id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true
+    },
+    lat: {
+        type: DataTypes.FLOAT
+    },
+    lon: {
+        type: DataTypes.FLOAT
+    },
+    location: {
+        type: DataTypes.STRING
+    },
+    message: {
+        type: DataTypes.STRING
+    },
+    level: {
         type: DataTypes.INTEGER
+    },
+    event_type: {
+        type: DataTypes.STRING
+    }
+}, {
+    freezeTableName: true
+});
+
+const User = sequelize.define("\"Users\"", {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true
     },
     email: {
         type: DataTypes.STRING
     }
+}, {
+    freezeTableName: true
 });
 
-const Job = sequelize.define('job', {
-    user_id: {
+const Job = sequelize.define("\"Jobs\"", {
+    id_user: {
         type: DataTypes.INTEGER
     },
-    job_id: {
+    id_event: {
         type: DataTypes.INTEGER
     },
     resultado: {
-        type: DataType.FLOAT
+        type: DataTypes.FLOAT
     }
+}, {
+    freezeTableName: true
 });
+
+module.exports = { Event, User, Job };

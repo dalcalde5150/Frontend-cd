@@ -24,6 +24,4 @@ jobs:
       
     - name: Docker compose
       run: docker compose up -d
-    - name: Run tests
-      run: docker compose exec rails-app rspec spec
       
