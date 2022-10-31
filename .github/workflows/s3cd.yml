@@ -24,6 +24,7 @@ jobs:
     - name: Production Build
       working-directory: frontend
       run: |
+        npm i react-scripts
         yarn build
     - name: Unit Tests
       run: |
