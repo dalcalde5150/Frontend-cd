@@ -22,6 +22,7 @@ jobs:
       run: |
         yarn install
     - name: Production Build
+      working-directory: frontend
       run: |
         yarn build
     - name: Unit Tests
