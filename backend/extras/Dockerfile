@@ -11,4 +11,4 @@ RUN mkdir -p /usr/src/app/extras
 COPY mqttsub.py /usr/src/app/extras
 WORKDIR /usr/src/app/extras
 
-CMD ["python3", "/usr/src/app/extras/mqttsub.py"]
+CMD ["sh", "-c", "python3 mqttsub.py"]
