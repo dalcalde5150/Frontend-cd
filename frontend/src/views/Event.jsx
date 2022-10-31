@@ -20,7 +20,7 @@ export default function Event() {
       "latitud": item.lat,
       "longitud": item.lon
     }
-    axios.post('https://byz0ue8tw7.execute-api.us-east-1.amazonaws.com/prod/workers/new', new_worker)
+    axios.post('https://api.arqsis-26.tk/workers/new', new_worker)
     .then((response) => {
       setWorker(new_worker);
     }).catch((error) => {
@@ -31,7 +31,7 @@ export default function Event() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get('https://byz0ue8tw7.execute-api.us-east-1.amazonaws.com/prod/events');
+        const response = await axios.get('https://api.arqsis-26.tk/events');
         const res_data = response['data'];
         setData(res_data);
       } catch (error) {
@@ -44,7 +44,7 @@ export default function Event() {
   useEffect(() => {
     const getStatus = async () => {
       try {
-        const response = await axios.get('https://byz0ue8tw7.execute-api.us-east-1.amazonaws.com/prod/workers');
+        const response = await axios.get('https://api.arqsis-26.tk/workers');
         if (response['data'] == true) {
           setActive("Disponible");
         } else {

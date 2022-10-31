@@ -18,7 +18,7 @@ export default function SignIn() {
     const sendData = async (event) => {
         event.preventDefault();
         try {
-            const res = await axios.post('https://byz0ue8tw7.execute-api.us-east-1.amazonaws.com/prod/users/login', data);
+            const res = await axios.post('https://api.arqsis-26.tk/users/login', data);
             console.log(res.data);
         } catch (error) {
             console.log(error.response);
