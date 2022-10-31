@@ -5,7 +5,7 @@ import json
 import psycopg2
 import datetime
 
-conexion_db = psycopg2.connect(database='e0_app_development', user='admin', password='admin')
+conexion_db = psycopg2.connect(database='Emergencies', user='postgres', password='postgres')
 
 
 

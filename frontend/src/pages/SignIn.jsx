@@ -1,7 +1,13 @@
-import { React, useState } from "react";
+import { useState} from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from '../components/auth';
 import axios from "axios";
 
 export default function SignIn() {
+
+    const [user, setUser] = useState('');
+    const auth = useAuth();
+    const navigate = useNavigate();
 
     const [data, setData] = useState({
         username: "",
@@ -13,13 +19,16 @@ export default function SignIn() {
             ...data,
             [e.target.name]: e.target.value
         });
+        setUser(data.username);
     }
 
     const sendData = async (event) => {
         event.preventDefault();
         try {
             const res = await axios.post('http://localhost:3000/users/login', data);
-            console.log(res.data);
+            setUser(res.data.id);
+            auth.login(user)
+            navigate('/', { replace: true })
         } catch (error) {
             console.log(error.response);
         }
@@ -38,7 +47,7 @@ export default function SignIn() {
                     <input type="text" name="password" onChange={handleData} required />
                 </div>
                 <div>
-                    <input class="margin-title1" type="submit" name="Crear" value="Ingresar" />
+                    <button type="sumbit"> Ingresar </button>
                 </div>
             </form>
         </div>  

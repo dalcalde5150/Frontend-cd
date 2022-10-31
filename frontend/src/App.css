@@ -111,26 +111,27 @@
   margin-left: 130px;
 }
 
-#logo1{
+nav{
   height: 60px;
   background-color: black;
+  padding-top: 30px;
 }
-nav{padding-top: 20px;}
 
-.navi{
+.navlink{
   display: inline;
   color: white;
   text-decoration: none;
   padding-left: 40px;
   font-weight: bolder;
 }
-a:link { text-decoration: none; }
 
-a:visited { text-decoration: none; }
+.navlink:link { text-decoration: none; }
 
-a:hover { text-decoration: none; }
+.navlink:visited { text-decoration: none; }
 
-a:active { text-decoration: none; }
+.navlink:hover { text-decoration: none; }
+
+.navlink:active { text-decoration: none; }
 
 .formu{
   display: inline-block;
