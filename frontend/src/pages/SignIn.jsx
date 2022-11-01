@@ -24,8 +24,9 @@ export default function SignIn() {
         event.preventDefault();
         try {
             const res = await axios.post('https://api.arqsis-26.tk/users/login', data);
-            auth.login(res.data.id)
-            navigate('/', { replace: true })
+            auth.login(res.data.id);
+            console.log(res);
+            navigate('/', { replace: true });
         } catch (error) {
             console.log(error.response);
         }

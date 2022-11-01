@@ -22,21 +22,21 @@ app.use(cors({
     exposeHeaders: ['Set-Cookie'] 
 }));
 
-// Logs de los requests
-app.use(koaLogger());
-
-// Parse request body
-app.use(koaBody());
-
 // Config cookies
 app.proxy = true;
 app.keys = [`${process.env.APP_KEYS}`];
 
 const CONFIG = {
-    httpOnly: true,
+    httpOnly: false,
     secure: true
 }
 app.use(session(CONFIG, app));
+
+// Logs de los requests
+app.use(koaLogger());
+
+// Parse request body
+app.use(koaBody());
 
 // Se asigna el router a la aplicación
 app.use(router.routes());
