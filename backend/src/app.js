@@ -16,7 +16,7 @@ const app = new Koa();
 app.context.orm = orm;
 
 // Se asigna el cors a la aplicación
-app.use(cors({ credentials: true, origin: ['https://arqsis-26.tk', 'https://www.arqsis-26.tk'] }));
+app.use(cors({ credentials: true, origin: 'https://arqsis-26.tk' }));
 
 // Logs de los requests
 app.use(koaLogger());
