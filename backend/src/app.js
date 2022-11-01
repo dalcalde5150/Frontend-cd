@@ -24,6 +24,8 @@ app.use(koaLogger());
 // Parse request body
 app.use(koaBody());
 
+// Config cookies
+app.proxy = true;
 app.keys = [`${process.env.APP_KEYS}`];
 
 const CONFIG = {
