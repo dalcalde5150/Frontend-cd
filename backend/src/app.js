@@ -16,7 +16,7 @@ const app = new Koa();
 app.context.orm = orm;
 
 // Se asigna el cors a la aplicación
-app.use(cors({ credentials: true}));
+app.use(cors({ credentials: true, origin: '*' }));
 
 // Logs de los requests
 app.use(koaLogger());
