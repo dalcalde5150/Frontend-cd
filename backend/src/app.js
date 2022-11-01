@@ -28,6 +28,7 @@ app.keys = [`${process.env.APP_KEYS}`];
 
 const CONFIG = {
     httpOnly: true,
+    secure: true
 }
 app.use(session(CONFIG, app));
 
