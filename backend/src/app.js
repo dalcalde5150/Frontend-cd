@@ -27,7 +27,7 @@ app.use(koaBody());
 app.keys = [`${process.env.APP_KEYS}`];
 
 const CONFIG = {
-    httpOnly: false,
+    httpOnly: true,
 }
 app.use(session(CONFIG, app));
 

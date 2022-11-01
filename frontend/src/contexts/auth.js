@@ -9,7 +9,8 @@ export const AuthProvider = ({ children }) => {
   const login = (new_user) => {
     const session = Cookies.get("koa.sess");
     if (session) {
-      setUser(new_user)
+      setUser(new_user);
+      console.log(user);
     }
   };
 
