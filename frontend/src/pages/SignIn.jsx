@@ -2,6 +2,7 @@ import { useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '../contexts/auth';
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export default function SignIn() {
 
@@ -24,8 +25,9 @@ export default function SignIn() {
         event.preventDefault();
         try {
             const res = await axios.post('https://api.arqsis-26.tk/users/login', data);
-            auth.login(res.data.id);
-            console.log(res);
+            Cookies.set('user_id', res.data.id);
+            Cookies.set('token', res.data.token);
+            auth.login();
             navigate('/', { replace: true });
         } catch (error) {
             console.log(error.response);

@@ -6,19 +6,20 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  const login = (new_user) => {
-    const session = Cookies.get("koa.sess");
+  const login = () => {
+    const session = Cookies.get("token");
+    const id = Cookies.get("user_id");
     console.log(session);
     if (session) {
-      setUser(new_user);
+      setUser(id);
       console.log(user);
     }
   };
 
   const logout = () => {
     setUser(null);
-    Cookies.remove("koa.sess");
-    Cookies.remove("koa.sess.sig");
+    Cookies.remove("user_id");
+    Cookies.remove("token");
   };
 
   return (<AuthContext.Provider value={{user, login, logout}}>{children}</AuthContext.Provider>);

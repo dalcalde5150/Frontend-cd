@@ -33,11 +33,10 @@ router.post('login', '/login', async (ctx) => {
             user_id: user.id
         });
 
-        ctx.session.sessionid = new_session.id;
-        //ctx.cookies.set('sessionid', new_session.id, { httpOnly: true, secure: true, sameSite: "none", secureProxy: true });
+    
 
         ctx.status = 201;
-        ctx.body = {'message': 'Usuario logueado exitosamente', 'id': user.id};
+        ctx.body = {'message': 'Usuario logueado exitosamente', 'id': user.id, 'token': new_session.id};
     }
     catch (error) {
         ctx.throw(400, error.message);
