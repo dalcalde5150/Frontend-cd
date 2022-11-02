@@ -13,13 +13,19 @@ services:
     networks:
       - app_network
 
-  rails-app:
+  backend:
     build:
-      context: ./backend/app_e0
-    container_name: rails-app
+      context: ./backend
+    container_name: backend
     ports: ["3000:3000"]
     depends_on:
       - db
+    environment:
+      - DB_USERNAME=admin
+      - DB_PASSWORD=admin
+      - DB_HOST=db
+      - DB_PORT=3000
+      - APP_KEYS=secretkey
     restart: unless-stopped
     links:
       - db:db
@@ -27,10 +33,11 @@ services:
       - app_network
 
   sub-broker:
-    build: ./backend
+    build: ./backend/extras
     container_name: sub-broker
     depends_on:
       - db
+    restart: always
     links:
       - db:db
     networks:
@@ -38,11 +45,15 @@ services:
 
   producers:
     build:
-      context: ./backend/tasks/producers
+      context: ./backend/extras/tasks/producers
     container_name: producers
     ports: ["8080:8080"]
+    restart: always
     networks:
       - app_network
+    depends_on:
+      - redis
+      - backend
     environment:
       - REDIS_PORT=6379
       - REDIS_PASSWORD=1234
@@ -50,22 +61,23 @@ services:
 
   workers:
     build:
-      context: ./backend/tasks/workers
+      context: ./backend/extras/tasks/workers
     container_name: workers
     networks:
       - app_network
+    depends_on:
+      - backend
+      - redis
+      - producers
+      - db
+    restart: always
     environment:
       - REDIS_PORT=6379
       - REDIS_PASSWORD=1234
       - REDIS_HOST=redis
-
-  frontend:
-    build:
-      context: ./frontend
-    container_name: frontend
-    networks:
-      - app_network
-    ports: ["3002:3002"]
+      - DB_USERNAME=admin
+      - DB_PASSWORD=admin
+      - SENDGRID_API_KEY=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
 
   redis:
     image: "redis:7.0.5"
