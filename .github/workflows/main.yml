@@ -28,4 +28,5 @@ jobs:
     #     node-version: '14'
 
     - name: Build Static Website
+      working-directory: ./frontend
       run: yarn build
