@@ -18,10 +18,6 @@ jobs:
       working-directory: backend
       run: docker build . --file Dockerfile --tag proyecto-base-grupo-26-backend:$(date +%s)
       
-    - name: Build the Docker frontend image
-      working-directory: frontend
-      run: docker build . --file Dockerfile --tag proyecto-base-grupo-26-frontend:$(date +%s)
-      
     - name: Docker compose
       run: docker compose up -d
       
