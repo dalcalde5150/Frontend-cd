@@ -21,7 +21,7 @@ jobs:
         # https://stackoverflow.com/questions/66381595/trying-to-parse-json-output-in-a-github-action
         run: |
             deploymentId=$( aws deploy create-deployment \
-              --application-name cd-backend \
+              --application-name E2-arqui \
               --deployment-config-name CodeDeployDefault.OneAtATime \
               --deployment-group-name CodeDeployGitHubDemo-DepGrp \
               --description "Automatic deployment of ${{github.sha}}" \
