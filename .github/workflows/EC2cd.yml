@@ -25,7 +25,7 @@ jobs:
               --deployment-config-name CodeDeployDefault.OneAtATime \
               --deployment-group-name CodeDeployGitHubDemo-DepGrp \
               --description "Automatic deployment of ${{github.sha}}" \
-              --github-location repository=iic2173/proyecto-base-grupo-26,commitId=${{github.sha}} | jq -r '.deploymentId' )
+              --github-location repository=dalcalde5150/Frontend-cd,commitId=${{github.sha}} | jq -r '.deploymentId' )
             echo "deploymentId=$deploymentId" >> $GITHUB_OUTPUT
       - name: Wait until deployment is done
         run: aws deploy wait deployment-successful --deployment-id ${{steps.deployApplication.outputs.deploymentId}}
