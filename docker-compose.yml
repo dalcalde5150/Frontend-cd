@@ -1,0 +1,84 @@
+version: "3.9"
+services:
+  db:
+    image: "postgres:10.11"
+    container_name: db
+    environment:
+      - "POSTGRES_USER=admin"
+      - "POSTGRES_PASSWORD=admin"
+    restart: always
+    expose: ["5432"]
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - app_network
+
+  rails-app:
+    build:
+      context: ./backend/app_e0
+    container_name: rails-app
+    ports: ["3000:3000"]
+    depends_on:
+      - db
+    restart: unless-stopped
+    links:
+      - db:db
+    networks:
+      - app_network
+
+  sub-broker:
+    build: ./backend
+    container_name: sub-broker
+    depends_on:
+      - db
+    links:
+      - db:db
+    networks:
+      - app_network
+
+  producers:
+    build:
+      context: ./backend/tasks/producers
+    container_name: producers
+    ports: ["8080:8080"]
+    networks:
+      - app_network
+    environment:
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=1234
+      - REDIS_HOST=redis
+
+  workers:
+    build:
+      context: ./backend/tasks/workers
+    container_name: workers
+    networks:
+      - app_network
+    environment:
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=1234
+      - REDIS_HOST=redis
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    networks:
+      - app_network
+    ports: ["3002:3002"]
+
+  redis:
+    image: "redis:7.0.5"
+    container_name: redis
+    restart: always
+    ports: ["6379:6379"]
+    networks:
+      - app_network
+    command: redis-server --requirepass 1234
+
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  db-data:
